@@ -25,6 +25,8 @@ set(vtk_module_defaults
   -DModule_vtkRenderingFreeType:BOOL=ON
 )
 
+#check for ios first:
+set(toolchain_dir ${CMAKE_SOURCE_DIR}/toolchains)
 
 option(BUILD_ANDROID "Build for Android" ON)
 option(BUILD_IOS_DEVICE "Build for iOS device" ON)
