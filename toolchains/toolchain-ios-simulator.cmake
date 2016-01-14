@@ -12,7 +12,6 @@ find_program(CMAKE_CXX_COMPILER NAME g++
   /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/
   NO_DEFAULT_PATH)
 
-set(CMAKE_OSX_ARCHITECTURES i386)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmessage-length=0 -pipe")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-trigraphs -fpascal-strings")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -Wreturn-type -Wunused-variable")
@@ -23,6 +22,8 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -gdwarf-2 -fvisibility=hidden")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D__IPHONE_OS_VERSION_MIN_REQUIRED=40300")
 #set(CMAKE_C_FLAGS "${CMAKE_CXX_FLAGS}")
 
+set(CMAKE_OSX_ARCHITECTURES "i386;x86_64")
+set(CMAKE_XCODE_EFFECTIVE_PLATFORMS "-iphonesimulator")
 
 # Set the CMAKE_OSX_SYSROOT to the latest SDK found
 set(CMAKE_OSX_SYSROOT)
@@ -44,6 +45,7 @@ message(STATUS "-- Using iOS SDK: ${CMAKE_OSX_SYSROOT}")
 
 
 set(CMAKE_OSX_ARCHITECTURES "${CMAKE_OSX_ARCHITECTURES}" CACHE STRING "osx architectures")
+set(CMAKE_XCODE_EFFECTIVE_PLATFORMS "${CMAKE_XCODE_EFFECTIVE_PLATFORMS}" CACHE STRING "xcode platforms")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}" CACHE STRING "c++ flags")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "c flags")
 set(CMAKE_OSX_SYSROOT "${CMAKE_OSX_SYSROOT}" CACHE PATH "osx sysroot")

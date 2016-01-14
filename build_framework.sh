@@ -1,6 +1,6 @@
 
-rm -Rf build
-mkdir build
+#rm -Rf build
+#mkdir build
 cd build
 
 export CC="clang"

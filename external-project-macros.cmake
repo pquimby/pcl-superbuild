@@ -45,8 +45,8 @@ macro(fetch_vtk)
   ExternalProject_Add(
     vtk-fetch
     SOURCE_DIR ${source_prefix}/vtk
-    GIT_REPOSITORY git://github.com/patmarion/VTK.git
-    GIT_TAG ce4a267
+    GIT_REPOSITORY git://github.com/Kitware/VTK.git
+#    GIT_TAG ce4a267
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -54,7 +54,7 @@ macro(fetch_vtk)
 endmacro()
 
 #
-# VTK compile
+# VTK compile tools for host OS (aka your MAC)
 #
 macro(compile_vtk)
   set(proj vtk-host)
@@ -69,7 +69,7 @@ macro(compile_vtk)
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
       -DBUILD_SHARED_LIBS:BOOL=ON
       -DBUILD_TESTING:BOOL=OFF
-      ${vtk_module_defaults}
+      ${module_defaults}
   )
 endmacro()
 
@@ -84,17 +84,21 @@ macro(crosscompile_vtk tag)
     ${proj}
     SOURCE_DIR ${source_prefix}/vtk
     DOWNLOAD_COMMAND ""
+    INSTALL_COMMAND ""
     DEPENDS vtk-host
     CMAKE_ARGS
+      -DVTK_IOS_BUILD:BOOL=ON
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
       -DBUILD_SHARED_LIBS:BOOL=OFF
       -DBUILD_TESTING:BOOL=OFF
       -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file}
       -DVTKCompileTools_DIR:PATH=${build_prefix}/vtk-host
-      ${vtk_module_defaults}
+      ${module_defaults}
       -C ${try_run_results_file}
   )
+
+  force_build(${proj})
 endmacro()
 
 #
@@ -104,8 +108,8 @@ macro(fetch_flann)
   ExternalProject_Add(
     flann-fetch
     SOURCE_DIR ${source_prefix}/flann
-    GIT_REPOSITORY git://github.com/mariusmuja/flann
-    GIT_TAG cee08ec38a8df7bc70397f10a4d30b9b33518bb4
+    GIT_REPOSITORY git://github.com/mariusmuja/flann.git
+#    GIT_TAG cee08ec38a8df7bc70397f10a4d30b9b33518bb4
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -180,6 +184,7 @@ endmacro()
 # PCL fetch
 #
 macro(fetch_pcl)
+
   ExternalProject_Add(
     pcl-fetch
     SOURCE_DIR ${source_prefix}/pcl
@@ -211,7 +216,7 @@ macro(crosscompile_pcl tag)
     ${proj}
     SOURCE_DIR ${source_prefix}/pcl
     DOWNLOAD_COMMAND ""
-    DEPENDS pcl-fetch boost-${tag} flann-${tag} eigen
+    DEPENDS pcl-fetch boost-${tag} flann-${tag} vtk-${tag} eigen
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
@@ -224,6 +229,7 @@ macro(crosscompile_pcl tag)
       -DFLANN_INCLUDE_DIR=${install_prefix}/flann-${tag}/include
       -DFLANN_LIBRARY=${install_prefix}/flann-${tag}/lib/libflann_cpp_s.a
       -DBOOST_ROOT=${install_prefix}/boost-${tag}
+      -DVTK_DIR=${build_prefix}/vtk-${tag}//CMakeExternals/Build/vtk-ios-device-armv7s
       -C ${try_run_results_file}
   )
 
