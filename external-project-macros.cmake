@@ -188,7 +188,7 @@ macro(fetch_pcl)
   ExternalProject_Add(
     pcl-fetch
     SOURCE_DIR ${source_prefix}/pcl
-    GIT_REPOSITORY git://github.com/PointCloudLibrary/pcl.git
+    GIT_REPOSITORY git://github.com/CambrianTech/pcl
 #    GIT_TAG origin/android-tag
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
@@ -229,7 +229,8 @@ macro(crosscompile_pcl tag)
       -DFLANN_INCLUDE_DIR=${install_prefix}/flann-${tag}/include
       -DFLANN_LIBRARY=${install_prefix}/flann-${tag}/lib/libflann_cpp_s.a
       -DBOOST_ROOT=${install_prefix}/boost-${tag}
-      -DVTK_DIR=${build_prefix}/vtk-${tag}//CMakeExternals/Build/vtk-ios-device-armv7s
+      -DVTK_DIR=${build_prefix}/vtk-${tag}/CMakeExternals/Build/vtk-ios-device-armv7
+      -DWITH_PCAP:BOOL=OFF
       -C ${try_run_results_file}
   )
 
