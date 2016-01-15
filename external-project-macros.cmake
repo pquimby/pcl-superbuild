@@ -69,7 +69,7 @@ macro(compile_vtk)
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
       -DBUILD_SHARED_LIBS:BOOL=ON
       -DBUILD_TESTING:BOOL=OFF
-      ${module_defaults}
+      ${vtk_module_defaults}
   )
 endmacro()
 
@@ -94,7 +94,7 @@ macro(crosscompile_vtk tag)
       -DBUILD_TESTING:BOOL=OFF
       -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_file}
       -DVTKCompileTools_DIR:PATH=${build_prefix}/vtk-host
-      ${module_defaults}
+      ${vtk_module_defaults}
       -C ${try_run_results_file}
   )
 
@@ -238,10 +238,26 @@ macro(crosscompile_pcl tag)
 endmacro()
 
 
-macro(create_pcl_framework)
+macro(create_pcl_universal_framework)
     add_custom_target(pclFramework ALL
       COMMAND ${CMAKE_SOURCE_DIR}/makeFramework.sh pcl
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
       DEPENDS pcl-ios-device pcl-ios-simulator
-      COMMENT "Creating pcl.framework")
+      COMMENT "Creating universal pcl.framework")
+endmacro()
+
+macro(create_pcl_ios_framework)
+    add_custom_target(pclFramework ALL
+      COMMAND ${CMAKE_SOURCE_DIR}/makeiOSFramework.sh pcl
+      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+      DEPENDS pcl-ios-device
+      COMMENT "Creating ios only pcl.framework")
+endmacro()
+
+macro(create_pcl_simulator_framework)
+    add_custom_target(pclFramework ALL
+      COMMAND ${CMAKE_SOURCE_DIR}/makeSimulatorFramework.sh pcl
+      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+      DEPENDS pcl-ios-simulator
+      COMMENT "Creating simulator only pcl.framework")
 endmacro()

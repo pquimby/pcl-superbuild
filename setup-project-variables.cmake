@@ -22,6 +22,7 @@ set(vtk_module_defaults
   -DModule_vtkParallelCore:BOOL=ON
   -DModule_vtkRenderingCore:BOOL=ON
   -DModule_vtkRenderingFreeType:BOOL=ON
+  -DModule_vtkInteractionImage:BOOL=ON
 )
 
 set(vtk_module_tools
@@ -43,25 +44,26 @@ set(vtk_module_tools
   -DModule_vtkIOCore:BOOL=ON
   -DModule_vtkIOGeometry:BOOL=ON
   -DModule_vtkIOLegacy:BOOL=ON
+  -DModule_vtkInteractionImage:BOOL=ON
 )
 
 #not used
-set(module_defaults
-  -DVTK_Group_StandAlone:BOOL=OFF
-  -DVTK_Group_Rendering:BOOL=OFF
-  -DModule_vtkFiltersCore:BOOL=ON
-  -DModule_vtkFiltersModeling:BOOL=ON
-  -DModule_vtkFiltersSources:BOOL=ON
-  -DModule_vtkFiltersGeometry:BOOL=ON
-  -DModule_vtkIOGeometry:BOOL=ON
-  -DModule_vtkIOXML:BOOL=ON
-  -DModule_vtkIOImage:BOOL=ON
-  -DModule_vtkIOPLY:BOOL=ON
-  -DModule_vtkImagingCore:BOOL=ON
-  -DModule_vtkParallelCore:BOOL=ON
-  -DModule_vtkRenderingCore:BOOL=ON
-  -DModule_vtkRenderingFreeType:BOOL=ON
-)
+# set(module_defaults
+#   -DVTK_Group_StandAlone:BOOL=OFF
+#   -DVTK_Group_Rendering:BOOL=OFF
+#   -DModule_vtkFiltersCore:BOOL=ON
+#   -DModule_vtkFiltersModeling:BOOL=ON
+#   -DModule_vtkFiltersSources:BOOL=ON
+#   -DModule_vtkFiltersGeometry:BOOL=ON
+#   -DModule_vtkIOGeometry:BOOL=ON
+#   -DModule_vtkIOXML:BOOL=ON
+#   -DModule_vtkIOImage:BOOL=ON
+#   -DModule_vtkIOPLY:BOOL=ON
+#   -DModule_vtkImagingCore:BOOL=ON
+#   -DModule_vtkParallelCore:BOOL=ON
+#   -DModule_vtkRenderingCore:BOOL=ON
+#   -DModule_vtkRenderingFreeType:BOOL=ON
+# )
 
 #check for ios first:
 set(toolchain_dir ${CMAKE_SOURCE_DIR}/toolchains)
