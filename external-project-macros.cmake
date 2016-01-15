@@ -231,6 +231,7 @@ macro(crosscompile_pcl tag)
       -DBOOST_ROOT=${install_prefix}/boost-${tag}
       -DVTK_DIR=${build_prefix}/vtk-${tag}/CMakeExternals/Build/vtk-ios-device-armv7
       -DWITH_PCAP:BOOL=OFF
+      -DPCL_ENABLE_SSE=OFF
       -C ${try_run_results_file}
   )
 
@@ -239,7 +240,7 @@ endmacro()
 
 
 macro(create_pcl_universal_framework)
-    add_custom_target(pclFramework ALL
+    add_custom_target(pclFrameworkUniversal ALL
       COMMAND ${CMAKE_SOURCE_DIR}/makeFramework.sh pcl
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
       DEPENDS pcl-ios-device pcl-ios-simulator
@@ -247,7 +248,7 @@ macro(create_pcl_universal_framework)
 endmacro()
 
 macro(create_pcl_ios_framework)
-    add_custom_target(pclFramework ALL
+    add_custom_target(pclFrameworkIOS ALL
       COMMAND ${CMAKE_SOURCE_DIR}/makeiOSFramework.sh pcl
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
       DEPENDS pcl-ios-device
@@ -255,7 +256,7 @@ macro(create_pcl_ios_framework)
 endmacro()
 
 macro(create_pcl_simulator_framework)
-    add_custom_target(pclFramework ALL
+    add_custom_target(pclFrameworkSimulator ALL
       COMMAND ${CMAKE_SOURCE_DIR}/makeSimulatorFramework.sh pcl
       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
       DEPENDS pcl-ios-simulator
